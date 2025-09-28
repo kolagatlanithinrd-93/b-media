@@ -1,8 +1,12 @@
 import React from 'react';
 import { Search, Bell, MessageCircle } from 'lucide-react';
-import { currentUser } from '../data/mockData';
+import UserDropdown from './UserDropdown';
 
-export default function Header() {
+interface HeaderProps {
+  onSignOut: () => void;
+}
+
+export default function Header({ onSignOut }: HeaderProps) {
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 py-3">
@@ -31,11 +35,7 @@ export default function Header() {
               <MessageCircle className="w-6 h-6 text-gray-600 cursor-pointer hover:text-blue-600" />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">2</span>
             </div>
-            <img
-              src={currentUser.avatar}
-              alt={currentUser.displayName}
-              className="w-8 h-8 rounded-full cursor-pointer hover:ring-2 hover:ring-blue-500"
-            />
+            <UserDropdown onSignOut={onSignOut} />
           </div>
         </div>
 

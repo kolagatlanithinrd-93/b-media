@@ -11,6 +11,7 @@ import CreatePost from './pages/CreatePost';
 import News from './pages/News';
 import Investing from './pages/Investing';
 import Profile from './pages/Profile';
+import Settings from './pages/Settings';
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState<'splash' | 'signin' | 'signup' | 'app'>('splash');
@@ -51,6 +52,12 @@ function App() {
     setCurrentScreen('signin');
   };
 
+  const handleSignOut = () => {
+    localStorage.removeItem('authToken');
+    setIsAuthenticated(false);
+    setCurrentScreen('signin');
+  };
+
   if (currentScreen === 'splash') {
     return <SplashScreen onComplete={handleSplashComplete} />;
   }
@@ -66,13 +73,14 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<Layout onSignOut={handleSignOut} />}>
           <Route index element={<Home />} />
           <Route path="articles" element={<Articles />} />
           <Route path="create" element={<CreatePost />} />
           <Route path="news" element={<News />} />
           <Route path="investing" element={<Investing />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>
     </Router>
