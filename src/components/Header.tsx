@@ -1,12 +1,18 @@
 import React from 'react';
 import { Search, Bell, MessageCircle } from 'lucide-react';
+import { useState } from 'react';
 import UserDropdown from './UserDropdown';
+import MessagesModal from './MessagesModal';
+import NotificationsDropdown from './NotificationsDropdown';
 
 interface HeaderProps {
   onSignOut: () => void;
 }
 
 export default function Header({ onSignOut }: HeaderProps) {
+  const [isMessagesOpen, setIsMessagesOpen] = useState(false);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 py-3">
@@ -27,11 +33,15 @@ export default function Header({ onSignOut }: HeaderProps) {
           </div>
 
           <div className="flex items-center space-x-4">
-            <div className="relative">
+            <div className="relative" onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}>
               <Bell className="w-6 h-6 text-gray-600 cursor-pointer hover:text-blue-600" />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+              <NotificationsDropdown 
+                isOpen={isNotificationsOpen} 
+                onClose={() => setIsNotificationsOpen(false)} 
+              />
             </div>
-            <div className="relative">
+            <div className="relative" onClick={() => setIsMessagesOpen(true)}>
               <MessageCircle className="w-6 h-6 text-gray-600 cursor-pointer hover:text-blue-600" />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">2</span>
             </div>
@@ -50,6 +60,11 @@ export default function Header({ onSignOut }: HeaderProps) {
           </div>
         </div>
       </div>
+      
+      <MessagesModal 
+        isOpen={isMessagesOpen} 
+        onClose={() => setIsMessagesOpen(false)} 
+      />
     </header>
   );
 }
