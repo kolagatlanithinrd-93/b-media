@@ -1,0 +1,71 @@
+import React, { useState } from 'react';
+import { Heart, MessageCircle, Share, MoreHorizontal, CheckCircle } from 'lucide-react';
+import { Post } from '../types';
+
+interface PostCardProps {
+  post: Post;
+}
+
+export default function PostCard({ post }: PostCardProps) {
+  const [isLiked, setIsLiked] = useState(post.isLiked);
+  const [likes, setLikes] = useState(post.likes);
+
+  const handleLike = () => {
+    setIsLiked(!isLiked);
+    setLikes(isLiked ? likes - 1 : likes + 1);
+  };
+
+  return (
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-4">
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center space-x-3">
+          <img
+            src={post.author.avatar}
+            alt={post.author.displayName}
+            className="w-10 h-10 rounded-full"
+          />
+          <div>
+            <div className="flex items-center space-x-1">
+              <h3 className="font-semibold text-gray-900">{post.author.displayName}</h3>
+              {post.author.isVerified && (
+                <CheckCircle className="w-4 h-4 text-blue-500 fill-current" />
+              )}
+            </div>
+            <p className="text-sm text-gray-500">{post.timestamp}</p>
+          </div>
+        </div>
+        <MoreHorizontal className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-600" />
+      </div>
+
+      <p className="text-gray-800 mb-3 leading-relaxed">{post.content}</p>
+
+      {post.image && (
+        <img
+          src={post.image}
+          alt="Post content"
+          className="w-full rounded-lg mb-4 object-cover max-h-96"
+        />
+      )}
+
+      <div className="flex items-center justify-between pt-3 border-t border-gray-100">
+        <button
+          onClick={handleLike}
+          className="flex items-center space-x-2 text-gray-600 hover:text-red-500 transition-colors"
+        >
+          <Heart className={`w-5 h-5 ${isLiked ? 'fill-red-500 text-red-500' : ''}`} />
+          <span className="text-sm">{likes}</span>
+        </button>
+
+        <button className="flex items-center space-x-2 text-gray-600 hover:text-blue-500 transition-colors">
+          <MessageCircle className="w-5 h-5" />
+          <span className="text-sm">{post.comments}</span>
+        </button>
+
+        <button className="flex items-center space-x-2 text-gray-600 hover:text-green-500 transition-colors">
+          <Share className="w-5 h-5" />
+          <span className="text-sm">{post.shares}</span>
+        </button>
+      </div>
+    </div>
+  );
+}
