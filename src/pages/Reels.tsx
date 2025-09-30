@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Heart, MessageCircle, Share, MoreVertical, Play, Pause, Volume2, VolumeX } from 'lucide-react';
+import { Heart, MessageCircle, Share, MoreVertical, Play, Pause, Volume2, VolumeX, Bookmark } from 'lucide-react';
 
 interface Reel {
   id: string;
@@ -146,6 +146,13 @@ export default function Reels() {
               <Share className="w-7 h-7 text-white" />
             </button>
             <span className="text-white text-sm font-semibold mt-1">{reel.shares}</span>
+          </div>
+
+          {/* Save */}
+          <div className="flex flex-col items-center">
+            <button className="w-12 h-12 bg-black/30 rounded-full flex items-center justify-center">
+              <Bookmark className="w-7 h-7 text-white" />
+            </button>
           </div>
 
           {/* More */}

@@ -9,6 +9,7 @@ import Articles from './pages/Articles';
 import BusinessNews from './pages/BusinessNews';
 import ContentCreation from './pages/ContentCreation';
 import Reels from './pages/Reels';
+import ReelsDiscovery from './pages/ReelsDiscovery';
 import StockMarketClass from './pages/StockMarketClass';
 import Investing from './pages/Investing';
 import Profile from './pages/Profile';
@@ -79,7 +80,8 @@ function App() {
           <Route path="articles" element={<Articles />} />
           <Route path="business-news" element={<BusinessNews />} />
           <Route path="create" element={<ContentCreation />} />
-          <Route path="reels" element={<Reels />} />
+          <Route path="reels" element={<ReelsDiscovery />} />
+          <Route path="reels/:id" element={<Reels />} />
           <Route path="stock-market-class" element={<StockMarketClass />} />
           <Route path="investing" element={<Investing />} />
           <Route path="profile" element={<Profile />} />

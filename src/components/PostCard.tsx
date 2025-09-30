@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Heart, MessageCircle, Share, MoreHorizontal, CheckCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Heart, MessageCircle, Share, MoreHorizontal, CheckCircle, ChevronLeft, ChevronRight, Bookmark } from 'lucide-react';
 import { Post } from '../types';
 
 interface PostCardProps {
@@ -109,6 +109,10 @@ export default function PostCard({ post }: PostCardProps) {
         <button className="flex items-center space-x-2 text-gray-600 hover:text-green-500 transition-colors">
           <Share className="w-5 h-5" />
           <span className="text-sm">{post.shares}</span>
+        </button>
+
+        <button className="flex items-center space-x-2 text-gray-600 hover:text-yellow-500 transition-colors">
+          <Bookmark className="w-5 h-5" />
         </button>
       </div>
     </div>

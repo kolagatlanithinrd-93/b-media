@@ -1,115 +1,107 @@
 import React, { useState } from 'react';
-import { FileText, TrendingUp, Users, Video, BookOpen } from 'lucide-react';
+import { Search } from 'lucide-react';
 import PostCard from '../components/PostCard';
 import TrendingCard from '../components/TrendingCard';
 import ProfileCard from '../components/ProfileCard';
+import NavigationButtons from '../components/NavigationButtons';
 import { posts, trendingTopics, currentUser } from '../data/mockData';
-import { useNavigate } from 'react-router-dom';
 
 export default function Articles() {
   const [activeFilter, setActiveFilter] = useState('all');
-  const navigate = useNavigate();
-
-  const navigationButtons = [
-    { id: 'business-news', label: 'Business News', icon: TrendingUp, path: '/business-news' },
-    { id: 'content-creation', label: 'Content Creation', icon: Users, path: '/create' },
-    { id: 'reels', label: 'Reels', icon: Video, path: '/reels' },
-  ];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-6">
-      {/* Navigation Buttons */}
-      <div className="mb-6">
-        <div className="flex flex-wrap gap-4 justify-center">
-          {navigationButtons.map((button) => {
-            const Icon = button.icon;
-            return (
-              <button
-                key={button.id}
-                onClick={() => navigate(button.path)}
-                className="flex flex-col items-center justify-center w-24 h-24 bg-white rounded-2xl shadow-sm border border-gray-200 hover:shadow-md hover:border-green-200 transition-all duration-200 group"
-              >
-                <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mb-2 group-hover:bg-green-600 transition-colors">
-                  <Icon className="w-6 h-6 text-white" />
-                </div>
-                <span className="text-xs font-medium text-gray-700 text-center leading-tight">{button.label}</span>
-              </button>
-            );
-          })}
+    <div className="min-h-screen bg-gray-50">
+      {/* Search Bar */}
+      <div className="bg-white border-b border-gray-200 px-4 py-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <input
+              type="text"
+              placeholder="Search posts..."
+              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            />
+          </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Left Sidebar - Profile */}
-        <div className="hidden lg:block">
-          <ProfileCard user={currentUser} showFullProfile={true} />
-        </div>
+      {/* Navigation Buttons */}
+      <NavigationButtons />
 
-        {/* Main Content */}
-        <div className="lg:col-span-2">
-          {/* Trending Topics */}
-          <div className="mb-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-gray-900">Top Trends</h2>
-              <button className="text-green-600 font-semibold text-sm flex items-center hover:text-green-700">
-                View All
-              </button>
+      {/* Main Content */}
+      <div className="max-w-6xl mx-auto px-4 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Left Sidebar - Profile */}
+          <div className="hidden lg:block">
+            <ProfileCard user={currentUser} showFullProfile={true} />
+          </div>
+
+          {/* Main Content */}
+          <div className="lg:col-span-2">
+            {/* Trending Topics */}
+            <div className="mb-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold text-gray-900">Top Trends</h2>
+                <button className="text-green-600 font-semibold text-sm flex items-center hover:text-green-700">
+                  View All
+                </button>
+              </div>
+              <div className="flex space-x-4 overflow-x-auto pb-4">
+                {trendingTopics.map((topic) => (
+                  <TrendingCard key={topic.id} topic={topic} />
+                ))}
+              </div>
             </div>
-            <div className="flex space-x-4 overflow-x-auto pb-4">
-              {trendingTopics.map((topic) => (
-                <TrendingCard key={topic.id} topic={topic} />
+
+            {/* Posts Feed */}
+            <div>
+              {posts.map((post) => (
+                <PostCard key={post.id} post={post} />
               ))}
             </div>
           </div>
 
-          {/* Posts Feed */}
-          <div>
-            {posts.map((post) => (
-              <PostCard key={post.id} post={post} />
-            ))}
-          </div>
-        </div>
-
-        {/* Right Sidebar - Suggested Connections */}
-        <div className="hidden lg:block space-y-4">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            <h3 className="font-bold text-gray-900 mb-3">Suggested for You</h3>
-            <div className="space-y-3">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <img
-                      src={`https://images.pexels.com/photos/${3777598 + i}/pexels-photo-${3777598 + i}.jpeg?auto=compress&cs=tinysrgb&w=50`}
-                      alt="User"
-                      className="w-8 h-8 rounded-full"
-                    />
-                    <div>
-                      <p className="text-sm font-semibold text-gray-900">User {i}</p>
-                      <p className="text-xs text-gray-500">Market Analyst</p>
+          {/* Right Sidebar - Suggested Connections */}
+          <div className="hidden lg:block space-y-4">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+              <h3 className="font-bold text-gray-900 mb-3">Suggested for You</h3>
+              <div className="space-y-3">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <img
+                        src={`https://images.pexels.com/photos/${3777598 + i}/pexels-photo-${3777598 + i}.jpeg?auto=compress&cs=tinysrgb&w=50`}
+                        alt="User"
+                        className="w-8 h-8 rounded-full"
+                      />
+                      <div>
+                        <p className="text-sm font-semibold text-gray-900">User {i}</p>
+                        <p className="text-xs text-gray-500">Market Analyst</p>
+                      </div>
                     </div>
+                    <button className="text-green-600 text-sm font-semibold hover:text-green-700">
+                      Follow
+                    </button>
                   </div>
-                  <button className="text-green-600 text-sm font-semibold hover:text-green-700">
-                    Follow
-                  </button>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
 
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            <h3 className="font-bold text-gray-900 mb-3">Market Today</h3>
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">S&P 500</span>
-                <span className="text-sm text-green-600 font-semibold">+2.3%</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">NASDAQ</span>
-                <span className="text-sm text-green-600 font-semibold">+1.8%</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Bitcoin</span>
-                <span className="text-sm text-red-600 font-semibold">-0.5%</span>
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+              <h3 className="font-bold text-gray-900 mb-3">Market Today</h3>
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">S&P 500</span>
+                  <span className="text-sm text-green-600 font-semibold">+2.3%</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">NASDAQ</span>
+                  <span className="text-sm text-green-600 font-semibold">+1.8%</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">Bitcoin</span>
+                  <span className="text-sm text-red-600 font-semibold">-0.5%</span>
+                </div>
               </div>
             </div>
           </div>
