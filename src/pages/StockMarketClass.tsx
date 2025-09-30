@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Play, Users, Clock, Star, BookOpen, Video, TrendingUp } from 'lucide-react';
+import { Play, Users, Clock, Star, BookOpen, Video, TrendingUp } from 'lucide-react';
 
 interface LiveClass {
   id: string;
@@ -67,21 +67,9 @@ export default function StockMarketClass() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
-      {/* Header */}
-      <div className="mb-8">
-        <div className="relative max-w-2xl mx-auto mb-6">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-          <input
-            type="text"
-            placeholder="Search education content..."
-            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-          />
-        </div>
-
-        <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Stock Market Classes</h1>
-          <p className="text-gray-600">Learn about business, finance, and market trends</p>
-        </div>
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Stock Market Classes</h1>
+        <p className="text-gray-600">Learn about business, finance, and market trends</p>
       </div>
 
       {/* Category Filter */}

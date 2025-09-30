@@ -1,52 +1,38 @@
 import React, { useState } from 'react';
-import { Search, FileText, TrendingUp, Users, Video, BookOpen } from 'lucide-react';
+import { FileText, TrendingUp, Users, Video, BookOpen } from 'lucide-react';
 import PostCard from '../components/PostCard';
 import TrendingCard from '../components/TrendingCard';
 import ProfileCard from '../components/ProfileCard';
 import { posts, trendingTopics, currentUser } from '../data/mockData';
+import { useNavigate } from 'react-router-dom';
 
 export default function Articles() {
   const [activeFilter, setActiveFilter] = useState('all');
+  const navigate = useNavigate();
 
-  const filterButtons = [
-    { id: 'all', label: 'All Articles', icon: FileText },
-    { id: 'business', label: 'Business News', icon: TrendingUp },
-    { id: 'content', label: 'Content Creation', icon: Users },
-    { id: 'reels', label: 'Reels', icon: Video },
-    { id: 'education', label: 'Stock Market Class', icon: BookOpen },
+  const navigationButtons = [
+    { id: 'business-news', label: 'Business News', icon: TrendingUp, path: '/business-news' },
+    { id: 'content-creation', label: 'Content Creation', icon: Users, path: '/create' },
+    { id: 'reels', label: 'Reels', icon: Video, path: '/reels' },
   ];
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
-      {/* Search Bar */}
-      <div className="mb-6">
-        <div className="relative max-w-2xl mx-auto">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-          <input
-            type="text"
-            placeholder="Search for inspiration..."
-            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-          />
-        </div>
-      </div>
-
       {/* Navigation Buttons */}
-      <div className="mb-8">
-        <div className="flex flex-wrap gap-3 justify-center">
-          {filterButtons.map((button) => {
+      <div className="mb-6">
+        <div className="flex flex-wrap gap-4 justify-center">
+          {navigationButtons.map((button) => {
             const Icon = button.icon;
             return (
               <button
                 key={button.id}
-                onClick={() => setActiveFilter(button.id)}
-                className={`flex items-center space-x-2 px-6 py-3 rounded-full font-semibold transition-all duration-200 ${
-                  activeFilter === button.id
-                    ? 'bg-green-500 text-white shadow-lg transform scale-105'
-                    : 'bg-white text-gray-700 border border-gray-200 hover:bg-green-50 hover:border-green-200'
-                }`}
+                onClick={() => navigate(button.path)}
+                className="flex flex-col items-center justify-center w-24 h-24 bg-white rounded-2xl shadow-sm border border-gray-200 hover:shadow-md hover:border-green-200 transition-all duration-200 group"
               >
-                <Icon className="w-5 h-5" />
-                <span>{button.label}</span>
+                <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mb-2 group-hover:bg-green-600 transition-colors">
+                  <Icon className="w-6 h-6 text-white" />
+                </div>
+                <span className="text-xs font-medium text-gray-700 text-center leading-tight">{button.label}</span>
               </button>
             );
           })}
@@ -56,7 +42,7 @@ export default function Articles() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Left Sidebar - Profile */}
         <div className="hidden lg:block">
-          <ProfileCard user={currentUser} showFullProfile />
+          <ProfileCard user={currentUser} showFullProfile={true} />
         </div>
 
         {/* Main Content */}

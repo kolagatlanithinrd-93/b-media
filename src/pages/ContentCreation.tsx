@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, FileText, Video, Play, Image, Mic, Camera } from 'lucide-react';
+import { FileText, Video, Play, Image, Mic, Camera } from 'lucide-react';
 import { currentUser } from '../data/mockData';
 
 export default function ContentCreation() {
@@ -46,21 +46,9 @@ export default function ContentCreation() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">
-      {/* Header */}
-      <div className="mb-6">
-        <div className="relative max-w-2xl mx-auto mb-6">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-          <input
-            type="text"
-            placeholder="Search for inspiration..."
-            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-          />
-        </div>
-
-        <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Content</h1>
-          <p className="text-gray-600">Share your insights with the community</p>
-        </div>
+      <div className="text-center mb-6">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Content</h1>
+        <p className="text-gray-600">Share your insights with the community</p>
       </div>
 
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
