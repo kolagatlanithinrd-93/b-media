@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Heart, MessageCircle, Share, MoreHorizontal, CheckCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Heart, MessageCircle, Share, MoreHorizontal, CheckCircle } from 'lucide-react';
 import { Post } from '../types';
 
 interface PostCardProps {
@@ -9,23 +9,10 @@ interface PostCardProps {
 export default function PostCard({ post }: PostCardProps) {
   const [isLiked, setIsLiked] = useState(post.isLiked);
   const [likes, setLikes] = useState(post.likes);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  // Mock multiple images for demonstration
-  const images = post.image ? [post.image] : [];
-  const hasMultipleImages = images.length > 1;
 
   const handleLike = () => {
     setIsLiked(!isLiked);
     setLikes(isLiked ? likes - 1 : likes + 1);
-  };
-
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % images.length);
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
   return (
@@ -52,44 +39,12 @@ export default function PostCard({ post }: PostCardProps) {
 
       <p className="text-gray-800 mb-3 leading-relaxed">{post.content}</p>
 
-      {images.length > 0 && (
-        <div className="relative mb-4">
-          <img
-            src={images[currentImageIndex]}
-            alt="Post content"
-            className="w-full rounded-lg object-cover max-h-96"
-          />
-          
-          {hasMultipleImages && (
-            <>
-              <button
-                onClick={prevImage}
-                className="absolute left-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black/70 transition-colors"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                onClick={nextImage}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black/70 transition-colors"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-              
-              {/* Image indicators */}
-              <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                {images.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentImageIndex(index)}
-                    className={`w-2 h-2 rounded-full transition-colors ${
-                      index === currentImageIndex ? 'bg-white' : 'bg-white/50'
-                    }`}
-                  />
-                ))}
-              </div>
-            </>
-          )}
-        </div>
+      {post.image && (
+        <img
+          src={post.image}
+          alt="Post content"
+          className="w-full rounded-lg mb-4 object-cover max-h-96"
+        />
       )}
 
       <div className="flex items-center justify-between pt-3 border-t border-gray-100">

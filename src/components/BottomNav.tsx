@@ -1,14 +1,14 @@
 import React from 'react';
-import { Home, FileText, Plus, TrendingUp, Video } from 'lucide-react';
+import { Home, FileText, Plus, Calendar, MessageCircle } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 
 const navItems = [
-  { icon: Home, label: 'Articles', path: '/' },
+  { icon: Home, label: 'Home', path: '/' },
   { icon: FileText, label: 'Articles', path: '/articles' },
-  { icon: Plus, label: 'Create', path: '/create' },
-  { icon: TrendingUp, label: 'Business', path: '/business-news' },
-  { icon: Video, label: 'Reels', path: '/reels' },
+  { icon: Plus, label: 'Post', path: '/create' },
+  { icon: Calendar, label: 'Stock News', path: '/news' },
+  { icon: MessageCircle, label: 'Investing', path: '/investing' },
 ];
 
 export default function BottomNav() {

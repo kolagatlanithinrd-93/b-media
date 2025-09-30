@@ -4,10 +4,10 @@ import { User } from '../types';
 
 interface ProfileCardProps {
   user: User;
-  showFullProfile: boolean;
+  showFullProfile?: boolean;
 }
 
-export default function ProfileCard({ user, showFullProfile }: ProfileCardProps) {
+export default function ProfileCard({ user, showFullProfile = false }: ProfileCardProps) {
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
       <div className="flex flex-col items-center">
