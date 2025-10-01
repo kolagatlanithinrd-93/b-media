@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Play, Users, Clock, Star, BookOpen, Video, TrendingUp } from 'lucide-react';
+import NavigationButtons from '../components/NavigationButtons';
 
 interface LiveClass {
   id: string;
@@ -67,6 +68,9 @@ export default function StockMarketClass() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
+      {/* Navigation Buttons */}
+      <NavigationButtons />
+      
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Stock Market Classes</h1>
         <p className="text-gray-600">Learn about business, finance, and market trends</p>
