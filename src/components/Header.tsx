@@ -60,5 +60,6 @@ export default function Header({ onSignOut }: HeaderProps) {
           </div>
         </div>
       </div>
+    </header>
   )
 }
