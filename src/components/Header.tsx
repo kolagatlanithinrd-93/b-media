@@ -60,11 +60,3 @@ export default function Header({ onSignOut }: HeaderProps) {
           </div>
         </div>
       </div>
-      
-      <MessagesModal 
-        isOpen={isMessagesOpen} 
-        onClose={() => setIsMessagesOpen(false)} 
-      />
-    </header>
-  );
-}
