@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 interface SignInProps {
   onSignIn: (email: string, password: string) => void;
@@ -15,6 +16,44 @@ export default function SignIn({ onSignIn, onSwitchToSignUp }: SignInProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSignIn(email, password);
+  };
+
+  const handleSocialSignIn = async (provider: string) => {
+    try {
+      let authProvider: 'google' | 'facebook' | 'azure';
+      switch (provider) {
+        case 'Google':
+          authProvider = 'google';
+          break;
+        case 'Facebook':
+          authProvider = 'facebook';
+          break;
+        case 'Microsoft':
+          authProvider = 'azure';
+          break;
+        default:
+          throw new Error('Unsupported provider');
+      }
+
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: authProvider,
+        options: {
+          redirectTo: `${window.location.origin}/`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          }
+        }
+      });
+
+      if (error) {
+        console.error(`${provider} authentication error:`, error);
+        alert(`Failed to authenticate with ${provider}. Please try again.`);
+      }
+    } catch (error) {
+      console.error(`${provider} authentication error:`, error);
+      alert(`Failed to authenticate with ${provider}. Please try again.`);
+    }
   };
 
   return (
