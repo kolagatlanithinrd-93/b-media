@@ -1,13 +1,26 @@
 import React from 'react';
-import { Calendar, MapPin, Link as LinkIcon } from 'lucide-react';
+import { Calendar, MapPin, Link as LinkIcon, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import PostCard from '../components/PostCard';
 import { currentUser, posts } from '../data/mockData';
 
 export default function Profile() {
+  const navigate = useNavigate();
   const userPosts = posts.filter(post => post.author.id === currentUser.id);
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">
+      {/* Header with Back Arrow */}
+      <div className="flex items-center mb-6">
+        <button
+          onClick={() => navigate('/')}
+          className="mr-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
+        >
+          <ArrowLeft className="w-6 h-6 text-gray-700" />
+        </button>
+        <h1 className="text-xl font-semibold text-gray-900">Profile</h1>
+      </div>
+
       {/* Cover Photo */}
       <div className="relative h-48 bg-gradient-to-r from-blue-500 to-green-500 rounded-lg mb-6 overflow-hidden">
         <img
