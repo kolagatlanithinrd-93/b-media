@@ -45,9 +45,47 @@ export default function SignUp({ onSignUp, onSwitchToSignIn }: SignUpProps) {
   };
 
   const handleSocialSignUp = (provider: string) => {
-    console.log(`Sign up with ${provider}`);
-    // For now, just switch to sign in
-    onSwitchToSignIn();
+    const handleSocialAuth = async () => {
+      try {
+        const { supabase } = await import('../lib/supabase');
+        
+        let authProvider: 'google' | 'facebook' | 'azure';
+        switch (provider) {
+          case 'Google':
+            authProvider = 'google';
+            break;
+          case 'Facebook':
+            authProvider = 'facebook';
+            break;
+          case 'Microsoft':
+            authProvider = 'azure';
+            break;
+          default:
+            throw new Error('Unsupported provider');
+        }
+
+        const { data, error } = await supabase.auth.signInWithOAuth({
+          provider: authProvider,
+          options: {
+            redirectTo: `${window.location.origin}/`,
+            queryParams: {
+              access_type: 'offline',
+              prompt: 'consent',
+            }
+          }
+        });
+
+        if (error) {
+          console.error(`${provider} authentication error:`, error);
+          alert(`Failed to authenticate with ${provider}. Please try again.`);
+        }
+      } catch (error) {
+        console.error(`${provider} authentication error:`, error);
+        alert(`Failed to authenticate with ${provider}. Please try again.`);
+      }
+    };
+
+    handleSocialAuth();
   };
 
   return (
