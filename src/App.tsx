@@ -7,6 +7,7 @@ import { signIn as supabaseSignIn, signUp as supabaseSignUp, signOut as supabase
 import SplashScreen from './components/SplashScreen';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
+import OTPVerification from './components/OTPVerification';
 import Layout from './components/Layout';
 import Articles from './pages/Articles';
 import BusinessNews from './pages/BusinessNews';
@@ -20,7 +21,8 @@ import Settings from './pages/Settings';
 
 function AppContent() {
   const { user, profile, loading } = useAuthContext();
-  const [currentScreen, setCurrentScreen] = useState<'splash' | 'signin' | 'signup' | 'app'>('splash');
+  const [currentScreen, setCurrentScreen] = useState<'splash' | 'signin' | 'signup' | 'otp' | 'app'>('splash');
+  const [pendingEmail, setPendingEmail] = useState('');
 
   useEffect(() => {
     if (!loading) {
@@ -64,7 +66,7 @@ function AppContent() {
     display_name: string;
   }) => {
     try {
-      const { error } = await supabaseSignUp(userData.email, userData.password, {
+      const { data, error } = await supabaseSignUp(userData.email, userData.password, {
         username: userData.username,
         display_name: userData.display_name
       });
@@ -74,13 +76,28 @@ function AppContent() {
         return;
       }
       
-      // Auth context will handle the state update
+      // If user needs email confirmation, show OTP screen
+      if (data.user && !data.session) {
+        setPendingEmail(userData.email);
+        setCurrentScreen('otp');
+      }
+      // Otherwise, auth context will handle the state update
     } catch (error) {
       console.error('Sign up error:', error);
       alert('An error occurred during sign up');
     }
   };
 
+  const handleOTPVerification = () => {
+    // After successful OTP verification, the auth context will update
+    // and the user will be redirected to the app
+    setCurrentScreen('app');
+  };
+
+  const handleBackToSignUp = () => {
+    setPendingEmail('');
+    setCurrentScreen('signup');
+  };
   const handleSignOut = async () => {
     try {
       await supabaseSignOut();
@@ -123,6 +140,15 @@ function AppContent() {
     return <SignUp onSignUp={handleSignUp} onSwitchToSignIn={switchToSignIn} />;
   }
 
+  if (currentScreen === 'otp') {
+    return (
+      <OTPVerification 
+        email={pendingEmail}
+        onVerificationComplete={handleOTPVerification}
+        onBackToSignUp={handleBackToSignUp}
+      />
+    );
+  }
   return (
     <Router>
       <Routes>
