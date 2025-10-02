@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 
 interface SignInProps {
-  onSignIn: () => void;
+  onSignIn: (email: string, password: string) => void;
   onSwitchToSignUp: () => void;
 }
 
@@ -14,8 +14,7 @@ export default function SignIn({ onSignIn, onSwitchToSignUp }: SignInProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate sign in
-    onSignIn();
+    onSignIn(email, password);
   };
 
   return (

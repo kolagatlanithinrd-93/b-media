@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Eye, EyeOff, Calendar } from 'lucide-react';
 
 interface SignUpProps {
-  onSignUp: () => void;
+  onSignUp: (userData: { email: string; password: string; username: string; display_name: string }) => void;
   onSwitchToSignIn: () => void;
 }
 
@@ -36,14 +36,18 @@ export default function SignUp({ onSignUp, onSwitchToSignIn }: SignUpProps) {
       alert('Please agree to the Terms of Service and Privacy Policy');
       return;
     }
-    // Simulate sign up
-    onSignUp();
+    onSignUp({
+      email: formData.email,
+      password: formData.password,
+      username: formData.username,
+      display_name: formData.fullName
+    });
   };
 
   const handleSocialSignUp = (provider: string) => {
     console.log(`Sign up with ${provider}`);
-    // Simulate social sign up
-    onSignUp();
+    // For now, just switch to sign in
+    onSwitchToSignIn();
   };
 
   return (
